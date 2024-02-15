@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import mongooseaggragatePaginate from "mongoose-aggregate-paginate-v2";
 import 'dotenv/config'
 

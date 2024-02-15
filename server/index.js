@@ -2,10 +2,12 @@ import express from 'express';
 import connectDB from './db/db.js';
 import Router from './routes/route.routes.js';
 import 'dotenv/config'
+import cookieParser from 'cookie-parser';
 const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 
 connectDB()
