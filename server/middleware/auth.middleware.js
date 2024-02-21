@@ -1,14 +1,17 @@
 import jwt  from "jsonwebtoken";
+import User from "../models/User.models.js"
 
 
+export const  verifyJWT = async(req, res, next)=>{
+   try {
+       const Token = req.cookies.accessToken || req.headers("Authorization").replace("Bearer ", "")
+       const DecodedToken = jwt.verify(Token, process.env.ACCESS_TOKEN_SECRET)
+       const user = await User.findById(DecodedToken._id)
+        req.user = user
+        next()
 
-export const  logout = async(req, res, next)=>{
-    try {
-        const token = req.cookie?.accessToken || req.headers("Authorization").replace("Bearer","")
-        if(!token) return res.status(401).send("Access Denied")
-        const decoded = jwt.verify(token, process.env.ACCES_TOKEN_SECRET)
-        req.user = decoded
-    } catch (error) {
-        res.status(401).send("Invalid Token")
-    }
+
+   } catch (error) {
+       return res.status(401).send("Invalid Token")
+   }
 }
